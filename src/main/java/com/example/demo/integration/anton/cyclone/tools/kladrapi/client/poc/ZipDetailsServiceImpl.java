@@ -5,7 +5,7 @@ import com.example.demo.integration.anton.cyclone.tools.kladrapi.client.KladrObj
 import org.springframework.stereotype.Service;
 
 @Service
-public class ZipDetailsServiceImpl implements ZipDetailsService{
+public class ZipDetailsServiceImpl implements ZipDetailsService {
 
     private KladrApiClient kladrApiClient;
 
@@ -15,11 +15,10 @@ public class ZipDetailsServiceImpl implements ZipDetailsService{
 
     @Override
     public ZipDetails resolveZip(String zipCode) {
+
         KladrObject kladrObject = kladrApiClient.getBuildingWithParentsByZipCode(zipCode);
+
         if (kladrObject == null) {
-            // KladrApiClient uses bad error handling
-            // It should be refactored for production usage
-            // Leaving as is for POC
             return null;
         }
 
@@ -27,10 +26,18 @@ public class ZipDetailsServiceImpl implements ZipDetailsService{
 
         for (KladrObject parent : kladrObject.getParents()) {
             switch (parent.getContentType()) {
-                case "region" : regionName = parent.getName(); break;
-                case "district" : districtName = parent.getName(); break;
-                case "city" : cityId = parent.getId(); cityName = parent.getName(); break;
-                default: break;
+                case "region":
+                    regionName = parent.getName();
+                    break;
+                case "district":
+                    districtName = parent.getName();
+                    break;
+                case "city":
+                    cityId = parent.getId();
+                    cityName = parent.getName();
+                    break;
+                default:
+                    break;
             }
         }
 
