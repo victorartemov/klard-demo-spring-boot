@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <bean id="kladrApiClient" class="com.example.demo.integration.anton.cyclone.tools.kladrapi.client.KladrApiClient"/>
+    <bean id="zipDetailsService" class="com.example.demo.integration.anton.cyclone.tools.kladrapi.client.poc.ZipDetailsServiceImpl">
+        <constructor-arg ref="kladrApiClient"/>
+    </bean>
+
+
+</beans>
